@@ -152,6 +152,20 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
+ta-lib-0.4.0-src.tar.gz
+
+# Ignore untrade-sdk directory
+untrade-sdk/
+
+# Ignore untrade directory
+untrade/
+
+# Ignore ta-lib directory
+ta-lib/
+
+qenv/
+
+
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
