@@ -25,14 +25,14 @@ class MAStrategy(Strategy, ExitStrategy):
             "signal_value": signal,
         }
         
-        # exit_params = {
-        #     "periods":trade_period,
-        #     "ind":ind,
-        # }
-        # value_index = self.get_exit(exit_strategy='stop_loss_target',**exit_params)
+        exit_params = {
+            "periods":trade_period,
+            "ind":ind,
+        }
+        value_index = self.get_exit(exit_strategy='within_periods',**exit_params)
         # columns=['sq_high', 'sq_low', 'sq_close'] 
         # value_index = self.atr_exit(df_short[ind:ind + trade_period])
-        value_index = self.bb_exit(df_short[ind:ind + trade_period], 'trans_close')
+        # value_index = self.bb_exit(df_short[ind:ind + trade_period], 'trans_close')
         return value_index
     
     def generate_signal(self, column1, column2):

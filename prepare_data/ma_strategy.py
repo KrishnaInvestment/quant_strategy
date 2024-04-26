@@ -17,6 +17,7 @@ class PrepareMAData:
     def __init__(self) -> None:
         self.df_short = pd.read_csv(cn.SHORT_PERIOD_DATA_PATH_18_22)
         self.df_long = pd.read_csv(cn.LONG_PERIOD_DATA_PATH_18_22)
+        
     @staticmethod
     def apply_transformation(func):
         def wrapper(self, df, columns, transformation=None, **kwargs):
@@ -26,6 +27,11 @@ class PrepareMAData:
                 columns = 'trans_close'
             return func(self, df, columns)
         return wrapper
+    
+    @staticmethod
+    def add_sl_tp(df, column='close'):
+        df['sl'] = df[column]*abs(df.cross_signal-cn.STOP_LOSS)*abs(df.cross_signal)
+        df['tp'] = df[column]*abs(df.cross_signal+cn.TARGET)*abs(df.cross_signal)
     
     @apply_transformation
     def prepare_shorter_period_data(self, df_short,  columns, transformation=None, **kwargs):
@@ -37,6 +43,7 @@ class PrepareMAData:
         TACalculator.detect_cross_signals(df_short, *rsi_ma_columns)
         TACalculator.calculate_bollinger_bands(df_short, cn.BB_PERIOD, columns, cn.BB_STD_DEV)
         logger.info(f'Completed data with rsi and ma periods {cn.SHORT_RSI_PERIOD} and {cn.SHORT_RSI_MA_PERIOD}')
+        PrepareMAData.add_sl_tp(df_short)
         return df_short
 
     @apply_transformation
