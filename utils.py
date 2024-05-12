@@ -1,5 +1,6 @@
 import logging
 import os
+import pandas as pd
 
 def configure_logging():
     # Create a logger
@@ -25,3 +26,7 @@ def configure_logging():
     logger.addHandler(file_handler)
     logger.addHandler(stream_handler)
     return logger
+
+
+def merge_data(df1, df2):
+    df = pd.concat(df1, df2)
